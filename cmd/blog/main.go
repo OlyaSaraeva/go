@@ -1,7 +1,7 @@
 package main
 
 import {
-	"fmt"
+	"log"
 	"net/http"
 }
 
@@ -13,7 +13,7 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
-	fmt.Println("Start server")
+	log.Println("Start server")
 	http.ListenAndServe(port, mux)
 }
 
