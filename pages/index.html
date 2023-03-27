@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{.Title}}</title>
-        <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
-    </head>
-    <body>
-        <h1>{{ .Title }}</h1>
-        <h2>{{ .Subtitle }}</h2>
-        <h3>Vist my vk</h3>go mod init blog
-        <img href="/static/img/william_wong.png">
-    </body>
-</html>go env -w CGO_ENABLED="0"
+
+<head>
+    <meta charset=”utf-8” />
+    <title>{{.Title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header__top menu-block">
+            <p class="menu-block__logo">{{.Title}}</p>
+            <!-- <nav class="menu-block__menu menu">
+                <a href="#" class="menu__link">Home</a>
+                <a href="#" class="menu__link">Categories</a>
+                <a href="#" class="menu__link">About</a>
+                <a href="#" class="menu__link">Contact</a>
+            </nav> -->
+        </div>
+       <!--  <div class="header__title-block">
+            <h1 class="header__title">Let's do it together.</h1>
+            <p class="header__text">We travel the world in search of stories. Come along for the ride.</p>
+            <a href="#" class="header__button">View Latest Posts</a>
+        </div> -->
+    </header>
+   <!--  <nav class="navigation">
+        <a href="#" class="navigation__link">Nature</a>
+        <a href="#" class="navigation__link">Photography</a>
+        <a href="#" class="navigation__link">Relaxation</a>
+        <a href="#" class="navigation__link">Vacation</a>
+        <a href="#" class="navigation__link">Travel</a>
+        <a href="#" class="navigation__link">Adventure</a>
+    </nav> -->
+    <section class="container">
+        <div class="container__top-block top-block ">
+        </div>
+    </section>
+
+</body>
+
+</html>
