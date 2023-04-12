@@ -10,9 +10,9 @@ import (
 
 type indexPage struct {
 	Title         string
-	Subtitle string
+	Subtitle      string
 	FeaturedPosts []featuredPostData
-	MostPosts []mostPostData
+	MostPosts     []mostPostData
 }
 
 type featuredPostData struct {
