@@ -3,44 +3,105 @@
 
 <head>
     <meta charset=”utf-8” />
-    <title>{{.Title}}</title>
+    <title>Escape</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href='/static/css/style.css' rel="stylesheet">
 </head>
 
 <body>
 
     <header class="header">
         <div class="header__top menu-block">
-            <p class="menu-block__logo">{{.Title}}</p>
-            <!-- <nav class="menu-block__menu menu">
+            <p class="menu-block__logo">Escape.</p>
+            <nav class="menu-block__menu menu">
                 <a href="#" class="menu__link">Home</a>
                 <a href="#" class="menu__link">Categories</a>
                 <a href="#" class="menu__link">About</a>
                 <a href="#" class="menu__link">Contact</a>
-            </nav> -->
+            </nav>
         </div>
-       <!--  <div class="header__title-block">
-            <h1 class="header__title">Let's do it together.</h1>
-            <p class="header__text">We travel the world in search of stories. Come along for the ride.</p>
+        <div class="header__title-block">
+            <h1 class="header__title">{{ .Title }}</h1>
+            <p class="header__text">{{ .Subtitle }}</p>
             <a href="#" class="header__button">View Latest Posts</a>
-        </div> -->
+        </div>
     </header>
-   <!--  <nav class="navigation">
+    <nav class="navigation">
         <a href="#" class="navigation__link">Nature</a>
         <a href="#" class="navigation__link">Photography</a>
         <a href="#" class="navigation__link">Relaxation</a>
         <a href="#" class="navigation__link">Vacation</a>
         <a href="#" class="navigation__link">Travel</a>
         <a href="#" class="navigation__link">Adventure</a>
-    </nav> -->
+    </nav>
     <section class="container">
         <div class="container__top-block top-block ">
+            <p class="top-block__title title">Featured Posts</p>
+            <div class="top-block__block">
+                {{ range .FeaturedPosts }}
+                <div class="block {{ .BlockDirection }}">
+                    <p class="{{ .Emblema }}">{{ .EmblemaTitle }}</p>
+                    <div class="block__text-block {{ .Outt }}">
+                        <p class="block__title">{{ .Title }}</p>
+                        <p class="block__text block__text_out">{{ .Subtitle }}</p>
+                        <div class="block__autor">
+                            <div class="autor">
+                                <img src="{{.AuthorImg}}" class="autor__photo">
+                                <span class="autor__text">{{ .Author }}</span>
+                            </div>
+                            <span class="autor__text date">{{ .PublishDate }}</span>
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        <div class="container__main main ">
+            <p class="main__title title">Most Recent</p>
+            <div class="main__block">
+                {{range .MostPosts}}
+                <div class="main__item card">
+                    <img class="card__img" src="{{ .Background }}">
+                    <div class="card__text-block">
+                        <p class="card__title">{{ .TitleMost }}</p>
+                        <p class="card__text {{ .SizeSmall }}">{{.Text}}
+                        </p>
+                    </div>
+                    <div class="card__autor-block autor-block">
+                        <div class="autor-block__block">
+                            <img src="{{ .AuthorImg }}" class="autor-block__photo">
+                            <span class="autor-block__name">{{ .AuthorMost }}</span>
+                        </div>
+                        <span class="autor-block__date">{{ .PublishDate }}</span>
+                    </div>
+                </div>
+                {{end}}
+            </div>
         </div>
     </section>
-
+    <footer class="footer">
+        <div class="footer__block">
+            <p class="footer__title">Stay in Touch</p>
+            <form class="footer__form form">
+                <input type="email" class="form__text" placeholder="Enter your email address">
+                <button class="form__button">Submit</button>
+            </form>
+        </div>
+        <div class="footer__menu">
+            <div class="footer__menu-block menu-block">
+                <p class="menu-block__logo">Escape.</p>
+                <nav class="menu-block__menu menu">
+                    <a href="#" class="menu__link menu__link_opacity">Home</a>
+                    <a href="#" class="menu__link menu__link_opacity">Categories</a>
+                    <a href="#" class="menu__link menu__link_opacity">About</a>
+                    <a href="#" class="menu__link menu__link_opacity">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
 </body>
+
 
 </html>

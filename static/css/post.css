@@ -1,0 +1,38 @@
+.menu__link_color_black,
+.menu-block__logo_color_black,
+.header__title_color_black,
+.header__title_color_dark 
+{
+    color: rgba(46, 46, 46, 1);
+}
+
+.header__text 
+{
+    margin-bottom: 113px;
+}
+
+.header_color_white 
+{
+    background: #FFFFFF;
+}
+
+.container__photo-block 
+{
+    background: url(../img/road_ahead_big.png) no-repeat center center;
+    background-size: cover;
+    padding: 537px 0 0 0;
+}
+
+.main 
+{
+    max-width: 960px;
+    padding-top: 140px;
+    margin: auto;
+}
+
+.main__text 
+{
+    font: 400 24px/35px 'Oxygen', sans-serif;
+    color: #101315;
+    margin-bottom: 35px;
+}
