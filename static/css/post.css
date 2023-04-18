@@ -18,9 +18,10 @@
 
 .container__photo-block 
 {
-    background: url(../img/road_ahead_big.png) no-repeat center center;
-    background-size: cover;
-    padding: 537px 0 0 0;
+    /* background: url(../img/road_ahead_big.png) no-repeat center center;
+    background-size: cover; 
+    padding: 537px 0 0 0; */
+    width: 100%;
 }
 
 .main 

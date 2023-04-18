@@ -40,8 +40,8 @@
         <div class="container__top-block top-block ">
             <p class="top-block__title title">Featured Posts</p>
             <div class="top-block__block">
-                {{ range .Posts }}
-                <a href="{{ .PostURL }}">
+                {{ range .Featured }}
+                <a href="{{ .PostURL }}" class="link_underline">
                     <div class="block {{ .BlockDirection }}">
                         <p class="{{ .Emblema }}">{{ .EmblemaTitle }}</p>
                         <div class="block__text-block {{ .Outt }}">
@@ -64,18 +64,18 @@
             <p class="main__title title">Most Recent</p>
             <div class="main__block">
                 {{ range .Posts }}
-                <a href="{{ .PostURL }}" class="main__block-link">
+                <a href="{{ .PostURL }}" class="link_underline">
                 <div class="main__item card">
                     <img class="card__img" src="{{ .Background }}">
                     <div class="card__text-block">
-                        <p class="card__title">{{ .TitleMost }}</p>
-                        <p class="card__text {{ .SizeSmall }}">{{.Text}}
+                        <p class="card__title">{{ .Title }}</p>
+                        <p class="card__text {{ .SizeSmall }}">{{ .Subtitle }}
                         </p>
                     </div>
                     <div class="card__autor-block autor-block">
                         <div class="autor-block__block">
                             <img src="{{ .AuthorImg }}" class="autor-block__photo">
-                            <span class="autor-block__name">{{ .AuthorMost }}</span>
+                            <span class="autor-block__name">{{ .Author }}</span>
                         </div>
                         <span class="autor-block__date">{{ .PublishDate }}</span>
                     </div>

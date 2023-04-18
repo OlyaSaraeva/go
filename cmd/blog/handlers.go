@@ -16,7 +16,8 @@ type indexPage struct {
 	Title         string
 	Subtitle      string
 	//FeaturedPosts []featuredPostData
-	Posts     []*postListData
+	Posts    	  []*postListData
+	Featured 	  []*postfeacheListData
 }
 
 /* type featuredPostData struct {
@@ -31,11 +32,24 @@ type indexPage struct {
 	PublishDate    string `db:"PublishDate"`
 } */
 
+/* type mostPostData struct {
+	TitleMost          string `db:"title"`
+	Text       string `db:"subtitle"`
+	Background        string `db:"Background"`
+	EmblemaTitle   string `db:"EmblemaTitle"`
+	Outt           string `db:"Outt"`
+	BlockDirection string `db:"BlockDirection"`
+	AuthorMost         string `db:"Author"`
+	AuthorImg      string `db:"AuthorImg"`
+	PublishDate    string `db:"PublishDate"`
+} */
+
 type postData struct {
-	TitleMost    string `db:"title"`
-	Text         string `db:"subtitle"`
+	Title        string `db:"title"`
+	Subtitle     string `db:"subtitle"`
 	Background   string `db:"Background"`
 	AuthorMost   string `db:"Author"`
+	Content      string `db:"content"`
 	//AuthorImg    string `db:"AuthorImg"`
 	//PublishDate  string `db:"PublishDate"`
 	//SizeSmall    string `db:"SizeSmall"`
@@ -56,8 +70,23 @@ type postListData struct {
 	AuthorImg      string `db:"AuthorImg"`
 	PublishDate    string `db:"PublishDate"`
 	Background     string `db:"Background"`
-	TitleMost    string `db:"title"`
-	Text         string `db:"subtitle"`
+	SizeSmall      string `db:"SizeSmall"`
+	PostURL        string // URL ордера, на который мы будем переходить для конкретного поста
+}
+
+type postfeacheListData struct {
+	PostID         string `db:"post_id"`
+	Title          string `db:"title"`
+	Subtitle       string `db:"subtitle"`
+	BlockDirection string `db:"BlockDirection"`
+	Emblema        string `db:"Emblema"`
+	EmblemaTitle   string `db:"EmblemaTitle"`
+	Outt           string `db:"Outt"`
+	Author         string `db:"Author"`
+	AuthorImg      string `db:"AuthorImg"`
+	PublishDate    string `db:"PublishDate"`
+	Background     string `db:"Background"`
+	SizeSmall      string `db:"SizeSmall"`
 	PostURL        string // URL ордера, на который мы будем переходить для конкретного поста
 }
 
@@ -70,13 +99,20 @@ func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 			return // Не забываем завершить выполнение ф-ии
 		}
 
-		/* posts, err := featuredPosts(db)
+		postsfeacheData, err := postsfeache(db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
 			log.Println(err)
 			return // Не забываем завершить выполнение ф-ии
 		}
 
+		/* posts, err := featuredPosts(db)
+		if err != nil {
+			http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
+			log.Println(err)
+			return // Не забываем завершить выполнение ф-ии
+		} */
+/*
 		postsmost, err := mostPosts(db)
 		if err != nil {
 			http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
@@ -96,6 +132,8 @@ func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 			Title:         "Let's do it together.",
 			Subtitle: "We travel the world in search of stories. Come along for the ride.",
 			Posts: postsData,
+			Featured: postsfeacheData,
+			//featured: featured,
 			//MostPosts: postsmost,
 		}
 
@@ -168,13 +206,50 @@ func posts(db *sqlx.DB) ([]*postListData, error) {
 			Outt,
 			EmblemaTitle,
 			Emblema,
-			BlockDirection
+			BlockDirection,
+			SizeSmall
+		FROM `  + "`post`" + 
+		`WHERE featured = 0`
+		
+	// Такое объединение строк делается только для таблицы order, т.к. это зарезерированное слово в SQL, наряду с SELECT, поэтому его нужно заключить в ``
+
+	var posts []*postListData // Заранее объявляем массив с результирующей информацией
+
+	err := db.Select(&posts, query) // Делаем запрос в базу данных
+	if err != nil {                  // Проверяем, что запрос в базу данных не завершился с ошибкой
+		return nil, err
+	}
+
+	for _, post := range posts {
+		post.PostURL = "/post/" + post.PostID // Формируем исходя из ID post'a в базе
+	}
+
+	fmt.Println(posts)
+
+	return posts, nil
+}
+
+func postsfeache(db *sqlx.DB) ([]*postfeacheListData, error) {
+	const query = `
+		SELECT
+			post_id,
+			title,
+			subtitle,
+			PublishDate,
+			Author,
+			AuthorImg,
+			Background,
+			Outt,
+			EmblemaTitle,
+			Emblema,
+			BlockDirection,
+			SizeSmall
 		FROM `  + "`post`" + 
 		`WHERE featured = 1`
 		
 	// Такое объединение строк делается только для таблицы order, т.к. это зарезерированное слово в SQL, наряду с SELECT, поэтому его нужно заключить в ``
 
-	var posts []*postListData // Заранее объявляем массив с результирующей информацией
+	var posts []*postfeacheListData // Заранее объявляем массив с результирующей информацией
 
 	err := db.Select(&posts, query) // Делаем запрос в базу данных
 	if err != nil {                  // Проверяем, что запрос в базу данных не завершился с ошибкой
@@ -195,7 +270,9 @@ func postByID(db *sqlx.DB, postID int) (postData, error) {
 	const query = `
 		SELECT
 			title,
-			content
+			content,
+			subtitle,
+			Background
 		FROM
 			` + "`post`" +
 		`WHERE
