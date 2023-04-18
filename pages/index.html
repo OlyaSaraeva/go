@@ -40,28 +40,31 @@
         <div class="container__top-block top-block ">
             <p class="top-block__title title">Featured Posts</p>
             <div class="top-block__block">
-                {{ range .FeaturedPosts }}
-                <div class="block {{ .BlockDirection }}">
-                    <p class="{{ .Emblema }}">{{ .EmblemaTitle }}</p>
-                    <div class="block__text-block {{ .Outt }}">
-                        <p class="block__title">{{ .Title }}</p>
-                        <p class="block__text block__text_out">{{ .Subtitle }}</p>
-                        <div class="block__autor">
-                            <div class="autor">
-                                <img src="{{.AuthorImg}}" class="autor__photo">
-                                <span class="autor__text">{{ .Author }}</span>
+                {{ range .Posts }}
+                <a href="{{ .PostURL }}">
+                    <div class="block {{ .BlockDirection }}">
+                        <p class="{{ .Emblema }}">{{ .EmblemaTitle }}</p>
+                        <div class="block__text-block {{ .Outt }}">
+                            <p class="block__title">{{ .Title }}</p>
+                            <p class="block__text block__text_out">{{ .Subtitle }}</p>
+                            <div class="block__autor">
+                                <div class="autor">
+                                    <img src="{{.AuthorImg}}" class="autor__photo">
+                                    <span class="autor__text">{{ .Author }}</span>
+                                </div>
+                                <span class="autor__text date">{{ .PublishDate }}</span>
                             </div>
-                            <span class="autor__text date">{{ .PublishDate }}</span>
                         </div>
                     </div>
-                </div>
+                </a>
                 {{end}}
             </div>
         </div>
         <div class="container__main main ">
             <p class="main__title title">Most Recent</p>
             <div class="main__block">
-                {{range .MostPosts}}
+                {{ range .Posts }}
+                <a href="{{ .PostURL }}" class="main__block-link">
                 <div class="main__item card">
                     <img class="card__img" src="{{ .Background }}">
                     <div class="card__text-block">
@@ -77,6 +80,7 @@
                         <span class="autor-block__date">{{ .PublishDate }}</span>
                     </div>
                 </div>
+                </a>
                 {{end}}
             </div>
         </div>

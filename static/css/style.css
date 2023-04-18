@@ -219,6 +219,11 @@
     margin: auto;
 }
 
+.main__block-link
+{
+    text-decoration: none;
+}
+
 .card 
 {
     margin-bottom: 25px;
