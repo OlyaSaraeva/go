@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    background: url(../img/background_pshenitsa.png) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.logo {
+    font: 400 46px/46px 'Lora', sans-serif;
+    color: #FFFFFF;
+
+}
+
+.logo_size_small {
+    font: 25px/31px 'Oxygen', sans-serif;
+    color: #FFFFFF;
+}
