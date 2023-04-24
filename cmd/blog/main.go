@@ -27,11 +27,7 @@ func main() {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/home", index(dbx)) // Передаём клиент к базе данных в ф-ию обработчик запроса
 
-	//mux.HandleFunc("/home", index)
-
-	//mux.HandleFunc("/post", post)
 	mux.HandleFunc("/post/{postID}", post(dbx))
-	//mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	mux.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	fmt.Println("Start server")
 	http.ListenAndServe(port, mux)
