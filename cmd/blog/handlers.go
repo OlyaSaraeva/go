@@ -59,6 +59,10 @@ type postfeacheListData struct {
 	PostURL        string // URL ордера, на который мы будем переходить для конкретного поста
 }
 
+type adminPage struct {
+	Title         string
+}
+
 func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		postsData, err := posts(db)
@@ -241,4 +245,24 @@ func postByID(db *sqlx.DB, postID int) (postData, error) {
 	}
 
 	return post, nil
+}
+
+func admin(w http.ResponseWriter, r *http.Request) {
+	ts, err := template.ParseFiles("pages/adminka.html") // Главная страница блога
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
+		log.Println(err.Error())                    // Используем стандартный логгер для вывода ошбики в консоль
+		return                                      // Не забываем завершить выполнение ф-ии
+	}
+
+	data := adminPage{
+		Title:         "Admin",
+	}
+
+	err = ts.Execute(w, data) // Заставляем шаблонизатор вывести шаблон в тело ответа
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		log.Println(err.Error())
+		return
+	}
 }
