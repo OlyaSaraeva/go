@@ -3,11 +3,11 @@
 
 <head>
     <meta charset=”utf-8” />
-    <title>{{.Title}}Admin</title>
+    <title>Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
-    <link href='/static/css/adminka_1.css' rel="stylesheet">
+    <link href='adminka_1.css' rel="stylesheet">
 </head>
 
 <body>
@@ -19,26 +19,27 @@
                 <span class="header__log-out"></span>
             </div>
         </header>
-        <form class="main__block" name="form">
+        <div class="main__block"> <!--  name="form" -->
             <div class="main__title-block title-block">
                 <div>
                     <h1 class="title-block__title">New Post</h1>
                     <p class="title-block__subtitle">Fill out the form bellow and publish your article</p>
                 </div>
-                <input type="submit" class="title-block__button" value="Publish">
+                <input type="submit" class="title-block__button" value="Publish" id="publish">
             </div>
-            <div class="main__form form">
+            <form class="main__form form" name="form">
                 <p class="form__title">Main Information</Main>
                 </p>
                 <div class="form__main">
                     <div class="form__block form-block">
                         <label class="form-block__label">Title</label>
-                        <input type="text" name="title" class="form__input" value="" onkeyup="copyValueTo()">
+                        <input type="text" name="title" class="form__input" value="" onkeyup="copyValueTo()" id="title">
                         <label class="form-block__label">Short description</label>
                         <input type="text" name="subtitle" class="form__input form__input_pass" value=""
-                            onkeyup="copyValueTo()">
+                            onkeyup="copyValueTo()" id="subtitle">
                         <label class="form-block__label">Author name</label>
-                        <input type="text" class="form__input form__input_pass" name="author" onkeyup="copyValueTo()">
+                        <input type="text" class="form__input form__input_pass" name="author" id="author"
+                            onkeyup="copyValueTo()">
                         <!-- required -->
                         <label class="form-block__label">Author Photo</label>
                         <div class="" id="blockAuthor">
@@ -144,16 +145,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form> <!-- div -->
             <div class="main__form-content content">
                 <p class="form__title">Content</p>
                 <label class="content__label">Post content (plain text)</label>
-                <textarea type="" class="content__textarea" placeholder="Type anything you want ..."></textarea>
+                <textarea type="" class="content__textarea" placeholder="Type anything you want ..." id="content"></textarea>
             </div>
-        </form>
+        </div> <!-- form -->
     </div>
     <script src="js/script.js"></script>
 </body>
-
 
 </html>
