@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=”utf-8” />
+    <title>{{ .Title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
+    <link href='/static/css/adminka.css' rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <div class="main-block">
+            <div class="main__logo logo-block">
+                <h1 class="logo">Escape<span class="logo logo_size_small">.author</span></h1>
+                <p class="logo-text">Log in to start creating</p>
+            </div>
+            <div class="main_form form">
+                <p class="form_title">Log In</p>
+                <form class="form-block">
+                    <label class="form-block_label" required>Email</label>
+                    <input type="email" class="form_input"> 
+                    <label class="form-block_label">Password</label>
+                    <input type="password" class="form_input form_input_pass" required> <!-- required -->
+                    <p class="icon"></p>
+                    <input type="submit" class="form_button" value="Log in">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
