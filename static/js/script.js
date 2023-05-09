@@ -28,34 +28,26 @@ function copyValueTo() {
 
 function previewFile(photo, post, prev) {
   const preview = document.getElementById(post);
-  // console.log(preview);
   const previewphoto = document.getElementById(prev);
-  //console.log(previewphoto);
   const file = document.getElementById(photo).files[0];
-  //console.log(file);
   const reader = new FileReader();
-  //console.log(reader);
 
-  //const prevblock=document.getElementsByClassName('input-file__load-block');
-
-  reader.addEventListener(
-    "load",
-    () => {
-      // convert image file to base64 string
-      preview.src = reader.result;
-      previewphoto.src = preview.src;
-      // console.log(preview.src);
-    },
-    false
-  );
+  if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+    reader.addEventListener(
+      "load",
+      () => {
+        // convert image file to base64 string
+        preview.src = reader.result;
+        previewphoto.src = preview.src;
+      },
+      false
+    );
+  }
 
   if (file) {
     reader.readAsDataURL(file);
-    // console.log(reader);
   }
-  // console.log(prev);
   if (prev == "prevArticleImage") {
-    //  console.log(22222);
     previewphoto.classList.add("preview-artical");
   } else if (prev == "prevHeroImagePost") {
     previewphoto.classList.add("preview-post");
@@ -86,7 +78,6 @@ function changeBlock(lablePar, block, rem) {
 
   let b = document.getElementById(lablePar);
   if (lablePar == "labelAuthor") {
-    // console.log(lablePar);
     reclass();
     let i = 0;
     rename(i);
@@ -103,7 +94,7 @@ function changeBlock(lablePar, block, rem) {
   }
 
   let remB = document.getElementById(rem);
-  // console.log(11111111)
+
   remB.classList.toggle("form-block__remove");
   remB.classList.toggle("form-block__remove_hidden");
 
@@ -117,15 +108,12 @@ function removePost(two, tree, block, rem, prevPost) {
   removePosts.src = '';
 
   if (two == "prevArticleImage") {
-    //console.log(333333);
     removePosts.classList.remove("preview-artical");
   } else if (two == "prevHeroImagePost") {
     removePosts.classList.remove("preview-post");
   }
 
-  // console.log(removePosts.value);
   changeBlock(tree, block, rem);
-  // console.log(rem);
 
   let prevPosts = document.getElementById(prevPost);
   prevPosts.src = '';
@@ -154,12 +142,10 @@ var authorImg = document.getElementById('postAuthorPhoto');
 var postImg = document.getElementById('postImage');
 var content = document.getElementById('content')
 
-console.log(postImg)
 var publish = document.getElementById('publish')
 
 publish.addEventListener(
   "click", function () {
-    //console.log(title.value);
     var data = {
       "Title": title.value,
       "Subtitle": subtitle.value,
