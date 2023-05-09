@@ -93,6 +93,11 @@
     cursor: pointer;
 }
 
+.view {
+    background: url(../img/eye-off.svg) no-repeat center;
+}
+
+
 .form_button {
     font: 16px/24px 'Oxygen', sans-serif;
     width: 93px;
