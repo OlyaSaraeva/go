@@ -1,38 +1,130 @@
-function copyValueTo() {
-  // получаем форму
-  let form = document.forms.form; // <form name="my"> element
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('Готов!');
+  initEventsListener();
+});
 
-  // получаем элемент
-  let title = form.elements.title; // <input name="one"> element
+function initEventsListener() {
+  let form = document.forms.form;
+
+  let title = form.elements.title;
+  title.addEventListener('keyup', function () {
+    copyValueTitle();
+  })
   let subtitle = form.elements.subtitle;
+  subtitle.addEventListener('keyup', function () {
+    copyValueSubtitle();
+  })
   let author = form.elements.author;
+  author.addEventListener('keyup', function () {
+    copyValueAuthorName();
+  })
   let publishDate = form.elements.publishDate;
+  publishDate.addEventListener('change', function () {
+    copyValuePublishDate();
+  })
 
-  let titlea = form.elements.titlea;
-  let subtitlea = form.elements.subtitlea;
+  let uploadAuthorPhoto = document.getElementById('labelAuthor');
+  let photo = document.getElementById('photo');
+  let postAuthorPhoto = document.getElementById('postAuthorPhoto');
+  let prevAuthor = document.getElementById('prevAuthor');
+  let blockAuthor = document.getElementById('blockAuthor');
+  let removeBlockAuthor = document.getElementById('removeBlockAuthor');
+  uploadAuthorPhoto.addEventListener('change', function () {
+    previewFile(photo, postAuthorPhoto, prevAuthor);
+    changeBlock(uploadAuthorPhoto, blockAuthor, removeBlockAuthor);
+  })
+
+  let uploadAticleImg = document.getElementById('labelAticle');
+  let heroImage = document.getElementById('heroImage');
+  let articleImage = document.getElementById('articleImage');
+  let prevArticleImage = document.getElementById('prevArticleImage');
+  let block = document.getElementById('block');
+  let removeBlock = document.getElementById('removeBlock');
+  uploadAticleImg.addEventListener('change', function () {
+    previewFile(heroImage, articleImage, prevArticleImage);
+    changeBlock(uploadAticleImg, block, removeBlock);
+  })
+
+  let uploadPostImg = document.getElementById('labelPost');
+  let heroImagePost = document.getElementById('heroImagePost');
+  let postImage = document.getElementById('postImage');
+  let prevHeroImagePost = document.getElementById('prevHeroImagePost');
+  let blockPost = document.getElementById('blockPost');
+  let removeBlockPost = document.getElementById('removeBlockPost');
+  uploadPostImg.addEventListener('change', function () {
+    previewFile(heroImagePost, postImage, prevHeroImagePost)
+    changeBlock(uploadPostImg, blockPost, removeBlockPost);
+  })
+
+  let authorRemove = document.getElementById('authorRemove');
+  authorRemove.addEventListener('click', function () {
+    removePost(prevAuthor, uploadAuthorPhoto, blockAuthor, removeBlockAuthor, postAuthorPhoto)
+  })
+
+  let articleRemove = document.getElementById('articleRemove');
+  articleRemove.addEventListener('click', function () {
+
+    removePost(prevArticleImage, uploadAticleImg, block, removeBlock, articleImage)
+  })
+
+  let postRemove = document.getElementById('postRemove');
+  postRemove.addEventListener('click', function () {
+
+    removePost(prevHeroImagePost, uploadPostImg, blockPost, removeBlock, postImage)
+  })
+
+  //JSON
+  var publish = document.getElementById('publish')
+  var content = document.getElementById('content')
+  publish.addEventListener(
+    "click", function () {
+      var data = {
+        "Title": title.value,
+        "Subtitle": subtitle.value,
+        "Author": author.value,
+        "PublishDate": publishDate.value,
+        "Content": content.value,
+        "authorImg": postAuthorPhoto.src,
+        "postImg": postImage.src
+      }
+      console.log(JSON.stringify(data, null, 2))
+    }
+  );
+}
+
+function copyValueTitle() {
+  let titleArticle = form.elements.titleArticle;
+  let titlePost = form.elements.titlePost;
+  titleArticle.value = title.value;
+  titlePost.value = title.value;
+}
+
+
+function copyValueSubtitle() {
+  let subtitleArticle = form.elements.subtitleArticle;
+  let subtitlePost = form.elements.subtitlePost;
+  subtitleArticle.value = subtitle.value;
+  subtitlePost.value = subtitle.value;
+}
+
+function copyValueAuthorName() {
   let authorPost = form.elements.authorPost;
-  let datePost = form.elements.datePost;
-
-  titlea.value = title.value;
-  subtitlea.value = subtitle.value;
   authorPost.value = author.value;
+}
 
-  let titlep = form.elements.titlep;
-  let subtitlep = form.elements.subtitlep;
-
+function copyValuePublishDate() {
+  let publishDate = form.elements.publishDate;
+  let datePost = form.elements.datePost;
   datePost.value = publishDate.value;
-
-  titlep.value = title.value;
-  subtitlep.value = subtitle.value;
 }
 
 function previewFile(photo, post, prev) {
-  const preview = document.getElementById(post);
-  const previewphoto = document.getElementById(prev);
-  const file = document.getElementById(photo).files[0];
+  const preview = post;
+  const previewphoto = prev;
+  const file = photo.files[0];
   const reader = new FileReader();
 
-  if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+  if (/\.(jpeg|png|gif|jpg)$/i.test(file.name)) {
     reader.addEventListener(
       "load",
       () => {
@@ -47,14 +139,14 @@ function previewFile(photo, post, prev) {
   if (file) {
     reader.readAsDataURL(file);
   }
-  if (prev == "prevArticleImage") {
+  if (prev.id == "prevArticleImage") {
     previewphoto.classList.add("preview-artical");
-  } else if (prev == "prevHeroImagePost") {
+  } else if (prev.id == "prevHeroImagePost") {
     previewphoto.classList.add("preview-post");
   }
 }
 
-//переименование upload
+//отображение загруженного фото
 function reclass() {
   const previewphoto = document.getElementById('prevAuthor');
   let photo = document.getElementById('uploadPhoto');
@@ -66,95 +158,67 @@ function reclass() {
 }
 
 function rename(i) {
-  let a = document.getElementsByClassName('input-file__upload')[i].textContent = "Upload New";
+  let uploadNew = document.getElementsByClassName('input-file__upload')[i].textContent = "Upload New";
 }
 
-function deletename(i) {
-  let a = document.getElementsByClassName('input-file__upload')[i].textContent = "Upload";
+function deleteName(i) {
+  let upload = document.getElementsByClassName('input-file__upload')[i].textContent = "Upload";
 }
 
-//изменение блока
-function changeBlock(lablePar, block, rem) {
-
-  let b = document.getElementById(lablePar);
-  if (lablePar == "labelAuthor") {
+//изменение блока на появление кнопки remove
+function changeBlock(label, blockAdd, removeBlock) {
+  if (label.id == "labelAuthor") {
     reclass();
     let i = 0;
     rename(i);
-  } else {
-    b.classList.toggle("input-file__img-block");
-    if (lablePar == "labelAticle") {
+  }
+  else {
+    label.classList.toggle("input-file__img-block");
+    if (label.id == "labelAticle") {
       i = 1;
       rename(i);
+      let articleImgExtension = document.getElementById('articleImgExtension');
+      articleImgExtension.style.display = "none";
     }
     else {
       i = 2;
       rename(2);
+      let postImgExtension = document.getElementById('postImgExtension');
+      postImgExtension.style.display = "none";
     }
   }
 
-  let remB = document.getElementById(rem);
+  removeBlock.classList.toggle("form-block__remove");
+  removeBlock.classList.toggle("form-block__remove_hidden");
 
-  remB.classList.toggle("form-block__remove");
-  remB.classList.toggle("form-block__remove_hidden");
-
-  let blocks = document.getElementById(block);
-  blocks.classList.toggle("form-block__block");
+  blockAdd.classList.toggle("form-block__block");
 }
 
 //удаление превью
-function removePost(two, tree, block, rem, prevPost) {
-  let removePosts = document.getElementById(two);
-  removePosts.src = '';
+function removePost(previewImg, uploadImg, block, removeBlock, prevPost) {
+  let removePost = previewImg;
+  removePost.src = '';
 
-  if (two == "prevArticleImage") {
-    removePosts.classList.remove("preview-artical");
-  } else if (two == "prevHeroImagePost") {
-    removePosts.classList.remove("preview-post");
+  if (previewImg.id == "prevArticleImage") {
+    removePost.classList.remove("preview-artical");
+  } else if (previewImg.id == "prevHeroImagePost") {
+    removePost.classList.remove("preview-post");
   }
+  changeBlock(uploadImg, block, removeBlock);
 
-  changeBlock(tree, block, rem);
+  prevPost.src = '';
 
-  let prevPosts = document.getElementById(prevPost);
-  prevPosts.src = '';
-
-  if (rem == "removeBlockAuthor") {
+  if (removeBlock.id == "removeBlockAuthor") {
     let i = 0;
-    deletename(i);
+    deleteName(i);
   } else {
     if (rem == "removeBlock") {
       i = 1;
-      deletename(i);
+      deleteName(i);
     }
     else {
       i = 2;
-      deletename(2);
+      deleteName(2);
     }
   }
 }
-
-//JSON
-var title = document.getElementById('title');
-var subtitle = document.getElementById('subtitle');
-var author = document.getElementById('author');
-var publishDate = document.getElementById('start');
-var authorImg = document.getElementById('postAuthorPhoto');
-var postImg = document.getElementById('postImage');
-var content = document.getElementById('content')
-
-var publish = document.getElementById('publish')
-
-publish.addEventListener(
-  "click", function () {
-    var data = {
-      "Title": title.value,
-      "Subtitle": subtitle.value,
-      "Author": author.value,
-      "PublishDate": publishDate.value,
-      "Content": content.value,
-      "authorImg": authorImg.src,
-      "postImg": postImg.src
-    }
-    console.log(JSON.stringify(data,null, 2))
-  }
-);

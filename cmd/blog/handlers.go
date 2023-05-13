@@ -7,6 +7,10 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"encoding/json"
+	"encoding/base64"
+	"io"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -63,6 +67,11 @@ type adminPage struct {
 	Title         string
 }
 
+type createPostRequest struct {
+	Title   string `json:"title"`  
+	Content string `json:"content"`
+ }
+ 
 func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		postsData, err := posts(db)
@@ -247,8 +256,28 @@ func postByID(db *sqlx.DB, postID int) (postData, error) {
 	return post, nil
 }
 
+func login(w http.ResponseWriter, r *http.Request) {
+	ts, err := template.ParseFiles("pages/login.html") // Главная страница блога
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
+		log.Println(err.Error())                    // Используем стандартный логгер для вывода ошбики в консоль
+		return                                      // Не забываем завершить выполнение ф-ии
+	}
+
+	data := adminPage{
+		Title:         "Admin",
+	}
+
+	err = ts.Execute(w, data) // Заставляем шаблонизатор вывести шаблон в тело ответа
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		log.Println(err.Error())
+		return
+	}
+}
+
 func admin(w http.ResponseWriter, r *http.Request) {
-	ts, err := template.ParseFiles("pages/adminka.html") // Главная страница блога
+	ts, err := template.ParseFiles("pages/admin.html") // Главная страница блога
 	if err != nil {
 		http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
 		log.Println(err.Error())                    // Используем стандартный логгер для вывода ошбики в консоль
@@ -267,22 +296,50 @@ func admin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func adminka(w http.ResponseWriter, r *http.Request) {
-	ts, err := template.ParseFiles("pages/adminka_1.html") // Главная страница блога
-	if err != nil {
+func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+	reqData, err := io.ReadAll(r.Body) // Прочитали тело запроса с reqData в виде массива байт
+       if err != nil {
 		http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
 		log.Println(err.Error())                    // Используем стандартный логгер для вывода ошбики в консоль
-		return                                      // Не забываем завершить выполнение ф-ии
-	}
+		return 
+       }
 
-	data := adminPage{
-		Title:         "Admin",
-	}
+	   imgAuthor, err := base64.StdEncoding.DecodeString(reqData.authorImg)
+	   img, err := base64.StdEncoding.DecodeString(reqData.PostImage)
+	   file, err := os.Create("static/img/" + reqData.PostImageName)
 
-	err = ts.Execute(w, data) // Заставляем шаблонизатор вывести шаблон в тело ответа
-	if err != nil {
+	   _, err = file.Write(img) // Записываем контент картинки в файл
+	   _, err = file.Write(imgAuthor)
+
+       var req createPostRequest  // Заранее объявили переменную  createOrderRequest
+
+       err =  json.Unmarshal(reqData, &req) // Отдали reqData и req на парсинг библиотеке json
+       if err != nil {
 		http.Error(w, "Internal Server Error", 500)
 		log.Println(err.Error())
 		return
+       }
 	}
 }
+
+func savePost(db *sqlx.DB, req createPostRequest) error {
+	const query = `
+		INSERT INTO
+			post
+		(
+			title,
+			content
+		)
+		VALUES
+		(
+			?,
+			?
+		)
+	`
+ 
+	_, err := db.Exec(query, req.Title, req.Content) // Сами данные передаются через аргументы к ф-ии Exec
+	return err
+ }
+ 
+
