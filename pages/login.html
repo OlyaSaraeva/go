@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=”utf-8” />
+    <title>{{ .Title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
+    <link href='/static/css/login.css' rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <div class="main-block">
+            <div class="main__logo logo-block">
+                <h1 class="logo">Escape<span class="logo logo_size_small">.author</span></h1>
+                <p class="logo-text">Log in to start creating</p>
+            </div>
+            <div class="main_form form">
+                <p class="form_title">Log In</p>
+                <form class="form-block">
+                    <label class="form-block_label">Email</label>
+                    <input type="email" class="form_input" id="email" required> 
+                    <label class="form-block_label">Password</label>
+                    <input type="password" name="password" class="form_input form_input_pass" required id="pass"> <!-- required -->
+                    <a href="#" class="icon" id="eye"></a>
+                    <input type="submit" class="form_button" value="Log in" id="login">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/login.js"></script>
+</body>
+
+
+</html>

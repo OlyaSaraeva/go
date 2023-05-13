@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=”utf-8” />
+    <title>Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
+    <link href='/static/css/admin.css' rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <header class="main__header header">
+            <p class="header__logo logo">Escape<span class="logo logo_size_small">.author</span></p>
+            <div class="header__avatar-block">
+                <span class="header__profile">N</span>
+                <span class="header__log-out"></span>
+            </div>
+        </header>
+        <div class="main__block"> <!--  name="form" -->
+            <div class="main__title-block title-block">
+                <div>
+                    <h1 class="title-block__title">New Post</h1>
+                    <p class="title-block__subtitle">Fill out the form bellow and publish your article</p>
+                </div>
+                <input type="submit" class="title-block__button" value="Publish" id="publish">
+            </div>
+            <form class="main__form form" name="form">
+                <p class="form__title">Main Information</Main>
+                </p>
+                <div class="form__main">
+                    <div class="form__block form-block">
+                        <label class="form-block__label">Title</label>
+                        <input type="text" name="title" class="form__input" value="" id="title">
+                        <label class="form-block__label">Short description</label>
+                        <input type="text" name="subtitle" class="form__input form__input_pass" value="" id="subtitle">
+                        <label class="form-block__label">Author name</label>
+                        <input type="text" class="form__input form__input_pass" name="author" id="author">
+                        <!-- required -->
+                        <label class="form-block__label">Author Photo</label>
+                        <div class="" id="blockAuthor">
+                            <label class="form__input-file input-file" id="labelAuthor">
+                                <img class="" id="prevAuthor">
+                                <input type="file" name="file" id="photo">
+                                <p class="input-file__button" id="uploadPhoto"></p>
+                                <span class="input-file__button-text input-file__upload camera">Upload</span>
+                            </label>
+                            <div class="form-block__remove_hidden" id="removeBlockAuthor">
+                                <p class="input-file__img input-file__img-remove"></p>
+                                <span class="input-file__button-text input-file__button-text_color_red"
+                                    id="authorRemove">Remove</span>
+                            </div>
+                        </div>
+                        <label class="form-block__label">Publish Date</label>
+                        <input type="date" id="start" name="publishDate" min="2000-01-01" max="2100-12-31"
+                            class="form__input">
+                        <label class="form-block__label">Hero Image</label>
+                        <img class="" id="prevArticleImage">
+                        <div class="" id="block">
+                            <label class="form__input-file input-file input-file__img-block" id="labelAticle">
+                                <input type="file" name="file" id="heroImage">
+                                <div class="input-file__upload-block">
+                                    <p class="input-file__img"></p>
+                                    <span class="input-file__button-text input-file__upload">Upload</span>
+                                </div>
+                            </label>
+                            <div class="form-block__remove_hidden" id="removeBlock">
+                                <p class="input-file__img input-file__img-remove"></p>
+                                <span class="input-file__button-text input-file__button-text_color_red"
+                                    id="articleRemove">Remove</span>
+                            </div>
+                        </div>
+                        <span class="form-block__label form-block__label_underblock" id="articleImgExtension">Size up to 10mb. Format: png, jpeg,
+                            gif.</span>
+                        <label class="form-block__label">Hero Image</label>
+                        <img class="" id="prevHeroImagePost">
+                        <div class="" id="blockPost">
+                            <label
+                                class="form__input-file input-file input-file__img-block input-file__img-block_size_small"
+                                id="labelPost">
+                                <input type="file" name="file" id="heroImagePost">
+                                <p class="input-file__img"></p>
+                                <span class="input-file__button-text input-file__upload">Upload</span>
+                            </label>
+                            <div class="form-block__remove_hidden" id="removeBlockPost">
+                                <p class="input-file__img input-file__img-remove"></p>
+                                <span class="input-file__button-text input-file__button-text_color_red"
+                                    id="postRemove">Remove
+                                </span>
+                            </div>
+                        </div>
+                        <span class="form-block__label form-block__label_underblock" id="postImgExtension">Size up to 5mb. Format: png, jpeg,
+                            gif.
+                        </span>
+                    </div>
+                    <div class="form__preview preview">
+                        <div>
+                            <label class="preview__label">Article preview</label>
+                            <div class="preview__article article">
+                                <div class="article__vokrug">
+                                    <div class="article__circul-block">
+                                        <span class="article__circul"></span>
+                                        <span class="article__circul"></span>
+                                        <span class="article__circul"></span>
+                                    </div>
+                                </div>
+                                <div class="article__main" name="article">
+                                    <p class="article__gradient-vertical"></p>
+                                    <input class="article__title" name="titleArticle">
+                                    <input class="article__subtitle" name="subtitleArticle">
+                                    <img src="" alt="" class="article__img" id="articleImage" />
+                                    <p class="article__gradient-gorizontal"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview__post-card">
+                            <label class="preview__label">Post card preview</label>
+                            <div class="preview__post article post-card">
+                                <div class="post-card__main" name="article">
+                                    <p class="post-card__gradient-vertical"></p>
+                                    <img class="post-card__img" id="postImage">
+                                    <input class="post-card__title" name="titlePost">
+                                    <input class="post-card__subtitle" name="subtitlePost">
+                                    <div class="post-card__author-block">
+                                        <div class="post-card__author">
+                                            <p class="post-card__author-photo"><img src="" height="26"
+                                                    id="postAuthorPhoto"></p>
+                                            <input class="post-card__author-name" name="authorPost">
+                                        </div>
+                                        <input class="post-card__date" name="datePost">
+                                    </div>
+                                </div>
+                                <p class="post-card__gradient-gorizontal"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form> <!-- div -->
+            <div class="main__form-content content">
+                <p class="form__title">Content</p>
+                <label class="content__label">Post content (plain text)</label>
+                <textarea type="" class="content__textarea" placeholder="Type anything you want ..."
+                    id="content"></textarea>
+            </div>
+        </div> <!-- form -->
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>
