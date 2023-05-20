@@ -10,7 +10,8 @@ import (
 	"encoding/json"
 	"encoding/base64"
 	"io"
-	"os"
+	"strings"
+	"os" 
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -64,13 +65,20 @@ type postfeacheListData struct {
 }
 
 type adminPage struct {
-	Title         string
+	Title          string
 }
 
 type createPostRequest struct {
-	Title   string `json:"title"`  
-	Content string `json:"content"`
- }
+	Title          string `json:"title"`  
+    Subtitle       string `json:"subtitle"`
+	Author         string `json:"author"`
+	AuthorImg      string `json:"authorImg"`
+	PublishDate    string `json:"publishDate"`
+	Background     string `json:"postImg"`
+	AuthorImgName  string `json:"authorImgName"`
+	PostImgName    string `json:"postImgName"`
+	Content        string `json:"content"`
+}
  
 func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +104,7 @@ func index(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 		}
 
 		data := indexPage{
-			Title:         "Let's do it together.",
+			Title:    "Let's do it together.",
 			Subtitle: "We travel the world in search of stories. Come along for the ride.",
 			Posts: postsData,
 			Featured: postsfeacheData,
@@ -296,7 +304,7 @@ func admin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
+ func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 	reqData, err := io.ReadAll(r.Body) // Прочитали тело запроса с reqData в виде массива байт
        if err != nil {
@@ -305,16 +313,27 @@ func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 		return 
        }
 
-	   imgAuthor, err := base64.StdEncoding.DecodeString(reqData.authorImg)
-	   img, err := base64.StdEncoding.DecodeString(reqData.PostImage)
-	   file, err := os.Create("static/img/" + reqData.PostImageName)
-
-	   _, err = file.Write(img) // Записываем контент картинки в файл
-	   _, err = file.Write(imgAuthor)
-
        var req createPostRequest  // Заранее объявили переменную  createOrderRequest
 
        err =  json.Unmarshal(reqData, &req) // Отдали reqData и req на парсинг библиотеке json
+       if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		log.Println(err.Error())
+		return
+       };
+
+	   imgAuthor, err := base64.StdEncoding.DecodeString(strings.Split(req.AuthorImg, ",")[1]) 
+	   imgPost, err := base64.StdEncoding.DecodeString(strings.Split(req.Background, ",")[1])
+	   fileAuthor, err := os.Create("static/img/" + req.AuthorImgName)
+	   filePostImg, err := os.Create("static/img/" + req.PostImgName)
+       fmt.Println(req.AuthorImgName)
+	   fmt.Println(req.PostImgName)
+
+	// Записываем контент картинки в файл
+       _, err = fileAuthor.Write(imgAuthor)
+	   _, err = filePostImg.Write(imgPost)
+
+	   err =  savePost(db, req)
        if err != nil {
 		http.Error(w, "Internal Server Error", 500)
 		log.Println(err.Error())
@@ -325,21 +344,24 @@ func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 
 func savePost(db *sqlx.DB, req createPostRequest) error {
 	const query = `
-		INSERT INTO
-			post
-		(
-			title,
-			content
-		)
-		VALUES
-		(
-			?,
-			?
-		)
+	INSERT INTO post (
+		Title, 
+		Subtitle, 
+		Emblema,
+		EmblemaTitle, 
+		Outt,
+		BlockDirection,
+		Author, 
+		AuthorImg,
+		Background, 
+		SizeSmall,
+		PublishDate,
+		featured, 
+		Content) 
+
+		VALUES (?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, 0, ?);
 	`
  
-	_, err := db.Exec(query, req.Title, req.Content) // Сами данные передаются через аргументы к ф-ии Exec
+	_, err := db.Exec(query, req.Title, req.Subtitle,"", "", "","", req.Author, "static/img/"+req.AuthorImgName,"static/img/"+req.PostImgName,"", req.PublishDate, req.Content) // Сами данные передаются через аргументы к ф-ии Exec
 	return err
- }
- 
-
+ } 
