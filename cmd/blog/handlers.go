@@ -307,7 +307,7 @@ func admin(w http.ResponseWriter, r *http.Request) {
  func createPost(db *sqlx.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 	reqData, err := io.ReadAll(r.Body) // Прочитали тело запроса с reqData в виде массива байт
-       if err != nil {
+       if err !=  nil {
 		http.Error(w, "Internal Server Error", 500) // В случае ошибки парсинга - возвращаем 500
 		log.Println(err.Error())                    // Используем стандартный логгер для вывода ошбики в консоль
 		return 
