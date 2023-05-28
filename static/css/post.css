@@ -1,36 +1,52 @@
 .menu__link_color_black,
 .menu-block__logo_color_black,
 .header__title_color_black,
-.header__title_color_dark 
-{
+.header__title_color_dark {
     color: rgba(46, 46, 46, 1);
 }
 
-.header__text 
-{
-    margin-bottom: 113px;
+.header__title-block_post {
+    padding: 82px 0 75px;
 }
 
-.header_color_white 
-{
+.header__text {
+    margin-bottom: 38px;
+}
+
+.header_color_white {
     background: #FFFFFF;
 }
 
-.container__photo-block 
-{
+.container__photo-block {
     width: 100%;
 }
 
-.main 
-{
-    max-width: 960px;
+.main {
+    max-width: 350px;
     padding-top: 140px;
     margin: auto;
 }
 
-.main__text 
-{
+.main__text {
     font: 400 24px/35px 'Oxygen', sans-serif;
     color: #101315;
     margin-bottom: 35px;
+}
+
+@media screen and (min-width: 480px) {    
+    .main {
+        max-width: 440px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main {
+        max-width: 720px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .main {
+        max-width: 960px;
+    }
 }

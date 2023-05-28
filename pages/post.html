@@ -3,6 +3,7 @@
 
 <head>
     <meta charset=”utf-8” />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Escape</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,8 +23,21 @@
                 <a href="#" class="menu__link menu__link_color_black">About</a>
                 <a href="#" class="menu__link menu__link_color_black">Contact</a>
             </nav>
+            <div class="menu-block__burger burger">
+                <div class="burger__block" id="burger">
+                    <p class="burger__stripe"></p>
+                    <p class="burger__stripe"></p>
+                    <p class="burger__stripe"></p>
+                </div>
+                <nav class="burger__menu" id="burgerMenu">
+                    <a href="#" class="burger-menu__link menu__link_color_black">Home</a>
+                    <a href="#" class="burger-menu__link menu__link_color_black">Categories</a>
+                    <a href="#" class="burger-menu__link menu__link_color_black">About</a>
+                    <a href="#" class="burger-menu__link menu__link_color_black">Contact</a>
+                </nav>
+            </div>
         </div>
-        <div class="header__title-block">
+        <div class="header__title-block header__title-block_post">
             <h1 class="header__title header__title_color_black">{{ .Title }}</h1>
             <p class="header__text header__title_color_dark">{{ .Subtitle }}</p>
         </div>
@@ -45,17 +59,18 @@
             </form>
         </div>
         <div class="footer__menu">
-            <div class="footer__menu-block menu-block">
-                <p class="menu-block__logo">Escape.</p>
-                <nav class="menu-block__menu menu">
-                    <a href="#" class="menu__link menu__link_opacity">Home</a>
-                    <a href="#" class="menu__link menu__link_opacity">Categories</a>
-                    <a href="#" class="menu__link menu__link_opacity">About</a>
-                    <a href="#" class="menu__link menu__link_opacity">Contact</a>
+            <div class="footer__menu-block menu-footer">
+                <p class="menu-footer__logo">Escape.</p>
+                <nav class="menu-footer__menu">
+                    <a href="#" class="menu-footer__link">Home</a>
+                    <a href="#" class="menu-footer__link">Categories</a>
+                    <a href="#" class="menu-footer__link">About</a>
+                    <a href="#" class="menu-footer__link">Contact</a>
                 </nav>
             </div>
         </div>
     </footer>
+    <script src="/static/js/adaptive.js"></script>
 </body>
 
 </html>
